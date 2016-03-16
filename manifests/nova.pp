@@ -35,10 +35,12 @@ class openstack_integration::nova (
   }
 
   class { '::nova::db::mysql':
-    password => 'nova',
+    password      => 'nova',
+    allowed_hosts => ['localhost'],
   }
   class { '::nova::db::mysql_api':
-    password => 'nova',
+    password      => 'nova',
+    allowed_hosts => ['localhost'],
   }
   class { '::nova::keystone::auth':
     public_url      => "${::openstack_integration::config::proto}://127.0.0.1:8774/v2/%(tenant_id)s",

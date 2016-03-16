@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::sahara {
 
   rabbitmq_user { 'sahara':
@@ -15,7 +17,8 @@ class openstack_integration::sahara {
   }
 
   class { '::sahara::db::mysql':
-    password => 'sahara',
+    password      => 'sahara',
+    allowed_hosts => ['localhost'],
   }
   class { '::sahara::keystone::auth':
     password     => 'a_big_secret',

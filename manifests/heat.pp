@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::heat {
 
   rabbitmq_user { 'heat':
@@ -25,7 +27,8 @@ class openstack_integration::heat {
     verbose             => true,
   }
   class { '::heat::db::mysql':
-    password => 'heat',
+    password      => 'heat',
+    allowed_hosts => ['localhost'],
   }
   class { '::heat::keystone::auth':
     password                  => 'a_big_secret',

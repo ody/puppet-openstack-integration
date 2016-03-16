@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::aodh {
 
   rabbitmq_user { 'aodh':
@@ -34,7 +36,8 @@ class openstack_integration::aodh {
     gnocchi_url         => $gnocchi_url,
   }
   class { '::aodh::db::mysql':
-    password => 'aodh',
+    password      => 'aodh',
+    allowed_hosts => ['localhost'],
   }
   class { '::aodh::keystone::auth':
     password => 'a_big_secret',

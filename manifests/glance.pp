@@ -41,7 +41,8 @@ class openstack_integration::glance (
   }
 
   class { '::glance::db::mysql':
-    password => 'glance',
+    password      => 'glance',
+    allowed_hosts => ['localhost'],
   }
   include ::glance
   include ::glance::client

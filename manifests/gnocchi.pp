@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::gnocchi {
 
   # gnocchi is not packaged in Ubuntu Cloud Archive
@@ -9,7 +11,8 @@ class openstack_integration::gnocchi {
       database_connection => 'mysql+pymysql://gnocchi:gnocchi@127.0.0.1/gnocchi?charset=utf8',
     }
     class { '::gnocchi::db::mysql':
-      password => 'gnocchi',
+      password      => 'gnocchi',
+      allowed_hosts => ['localhost'],
     }
     class { '::gnocchi::keystone::auth':
       password => 'a_big_secret',

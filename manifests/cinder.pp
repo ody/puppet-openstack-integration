@@ -26,7 +26,8 @@ class openstack_integration::cinder (
   }
 
   class { '::cinder::db::mysql':
-    password => 'cinder',
+    password      => 'cinder',
+    allowed_hosts => ['localhost'],
   }
   class { '::cinder::keystone::auth':
     password => 'a_big_secret',
@@ -84,9 +85,9 @@ class openstack_integration::cinder (
   class { '::cinder::backends':
     enabled_backends => ['BACKEND_1'],
   }
+
   cinder_type { 'BACKEND_1':
     ensure     => present,
     properties => ['volume_backend_name=BACKEND_1'],
   }
-
 }

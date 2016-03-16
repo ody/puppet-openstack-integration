@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::horizon {
 
   $vhost_params = { add_listen => false }

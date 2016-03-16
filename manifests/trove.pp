@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::trove {
 
   rabbitmq_user { 'trove':
@@ -22,7 +24,8 @@ class openstack_integration::trove {
     nova_proxy_admin_pass => 'a_big_secret',
   }
   class { '::trove::db::mysql':
-    password => 'trove',
+    password      => 'trove',
+    allowed_hosts => ['localhost'],
   }
   class { '::trove::keystone::auth':
     password => 'a_big_secret',

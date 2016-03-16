@@ -45,8 +45,8 @@ mod 'ironic',
   :ref => 'master'
 
 mod 'keystone',
-  :git => 'https://git.openstack.org/openstack/puppet-keystone',
-  :ref => 'master'
+  :git => 'https://github.com/ody/puppet-keystone.git',
+  :ref => 'puppet4'
 
 mod 'manila',
   :git => 'https://git.openstack.org/openstack/puppet-manila',

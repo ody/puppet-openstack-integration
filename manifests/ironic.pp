@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::ironic {
 
   include ::openstack_integration::config
@@ -37,7 +39,8 @@ class openstack_integration::ironic {
     enabled_drivers     => ['fake', 'pxe_ssh', 'pxe_ipmitool'],
   }
   class { '::ironic::db::mysql':
-    password => 'ironic',
+    password      => 'ironic',
+    allowed_hosts => ['localhost'],
   }
   class { '::ironic::keystone::auth':
     public_url   => "${::openstack_integration::config::proto}://127.0.0.1:6385",

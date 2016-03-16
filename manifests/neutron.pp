@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::neutron {
 
   include ::openstack_integration::config
@@ -17,7 +19,8 @@ class openstack_integration::neutron {
   }
 
   class { '::neutron::db::mysql':
-    password => 'neutron',
+    password      => 'neutron',
+    allowed_hosts => ['localhost'],
   }
   class { '::neutron::keystone::auth':
     password => 'a_big_secret',

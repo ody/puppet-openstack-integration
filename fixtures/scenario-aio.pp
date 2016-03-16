@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+# Setup all our class declarations with defaults that are needed to bring up
+# a basic cloud.
 include ::openstack_integration
 include ::openstack_integration::rabbitmq
 include ::openstack_integration::mysql
@@ -23,9 +25,34 @@ include ::openstack_integration::neutron
 include ::openstack_integration::nova
 include ::openstack_integration::cinder
 include ::openstack_integration::horizon
+include ::openstack_integration::keystone::secure
 include ::openstack_integration::provision
 
+# Bring in the tempest module so we can validate that the cloud works
+# successfully as expected.
 class { '::openstack_integration::tempest':
   horizon => true,
   cinder  => true,
 }
+
+# Now we explicitly setup all our class dependencies so everything runs in a
+# very specific order, the basics, message queue, database, then keystone so
+# we know everything else will have all the bootstrapped bits around so that
+# they finish setup properly, finally we secure keystone and provision some
+# resources for tempest to leverage,
+Class['::openstack_integration'] ->
+Class[[
+  '::openstack_integration::rabbitmq',
+  '::openstack_integration::mysql'
+]] ->
+Class['::openstack_integration::keystone'] ->
+Class[[
+  '::openstack_integration::glance',
+  '::openstack_integration::neutron',
+  '::openstack_integration::nova',
+  '::openstack_integration::cinder',
+  '::openstack_integration::horizon',
+  '::openstack_integration::tempest'
+]] ->
+Class['::openstack_integration::provision'] ->
+Class['::openstack_integration::keystone::secure'] ->

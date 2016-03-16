@@ -30,7 +30,8 @@ class openstack_integration::keystone (
   class { '::keystone::client': }
   class { '::keystone::cron::token_flush': }
   class { '::keystone::db::mysql':
-    password => 'keystone',
+    password      => 'keystone',
+    allowed_hosts => ['localhost'],
   }
   class { '::keystone':
     verbose             => true,
@@ -58,13 +59,5 @@ class openstack_integration::keystone (
     default_domain => $default_domain,
     public_url     => $::openstack_integration::config::keystone_auth_uri,
     admin_url      => $::openstack_integration::config::keystone_admin_uri,
-  }
-  class { '::keystone::disable_admin_token_auth': }
-
-  class { '::openstack_extras::auth_file':
-    password       => 'a_big_secret',
-    project_domain => 'default',
-    user_domain    => 'default',
-    auth_url       => "${::openstack_integration::config::keystone_auth_uri}/v3/",
   }
 }
