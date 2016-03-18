@@ -1,3 +1,5 @@
+##
+#
 class openstack_integration::rabbitmq {
 
   include ::openstack_integration::params
@@ -45,9 +47,11 @@ class openstack_integration::rabbitmq {
       environment_variables => $::openstack_integration::config::rabbit_env,
     }
   }
+
+  contain '::rabbitmq'
+
   rabbitmq_vhost { '/':
     provider => 'rabbitmqctl',
     require  => Class['::rabbitmq'],
   }
-
 }
