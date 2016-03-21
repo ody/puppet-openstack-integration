@@ -16,23 +16,15 @@ class openstack_integration::keystone (
   $using_domain_config = false,
 ) {
 
+  include ::apache
   include ::openstack_integration::config
   include ::openstack_integration::params
 
-  if $::openstack_integration::config::ssl {
-    openstack_integration::ssl_key { 'keystone':
-      notify  => Service['httpd'],
-      require => Package['keystone'],
-    }
-    Exec['update-ca-certificates'] ~> Service['httpd']
-  }
-
-  class { '::keystone::client': }
-  class { '::keystone::cron::token_flush': }
   class { '::keystone::db::mysql':
     password      => 'keystone',
     allowed_hosts => ['localhost'],
   }
+
   class { '::keystone':
     verbose             => true,
     debug               => true,
@@ -44,20 +36,40 @@ class openstack_integration::keystone (
     using_domain_config => $using_domain_config,
     enable_ssl          => $::openstack_integration::config::ssl,
   }
-  include ::apache
+
   class { '::keystone::wsgi::apache':
     ssl      => $::openstack_integration::config::ssl,
     ssl_key  => "/etc/keystone/ssl/private/${::fqdn}.pem",
     ssl_cert => $::openstack_integration::params::cert_path,
     workers  => 2,
   }
+
   class { '::keystone::roles::admin':
     email    => 'test@example.tld',
     password => 'a_big_secret',
   }
+
   class { '::keystone::endpoint':
     default_domain => $default_domain,
     public_url     => $::openstack_integration::config::keystone_auth_uri,
     admin_url      => $::openstack_integration::config::keystone_admin_uri,
+  }
+
+  contain([
+    '::keystone',
+    '::keystone::client',
+    '::keystone::endpoint',
+    '::keystone::db::mysql',
+    '::keystone::roles::admin',
+    '::keystone::wsgi::apache',
+    '::keystone::cron::token_flush',
+  ])
+
+  if $::openstack_integration::config::ssl {
+    openstack_integration::ssl_key { 'keystone':
+      notify  => Service['httpd'],
+      require => Package['keystone'],
+    }
+    Exec['update-ca-certificates'] ~> Service['httpd']
   }
 }

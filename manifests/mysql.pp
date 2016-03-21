@@ -1,5 +1,6 @@
+##
+#
 class openstack_integration::mysql {
 
-  class { '::mysql::server': }
-
+  contain ::mysql::server
 }
