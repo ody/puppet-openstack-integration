@@ -11,22 +11,31 @@ class openstack_integration::provision {
     provider => shell,
     command  => "nova ${os_auth_options} flavor-create m1.nano 42 128 0 1",
     unless   => "nova ${os_auth_options} flavor-list | grep m1.nano",
+    require  => [
+      Keystone_user_role['admin@openstack'],
+      Class['nova::keystone::auth'],
+    ],
   }
-  Keystone_user_role['admin@openstack'] -> Exec['manage_m1.nano_nova_flavor']
 
   exec { 'manage_m1.micro_nova_flavor':
     path     => '/usr/bin:/bin:/usr/sbin:/sbin',
     provider => shell,
     command  => "nova ${os_auth_options} flavor-create m1.micro 84 128 0 1",
     unless   => "nova ${os_auth_options} flavor-list | grep m1.micro",
+    require  => [
+      Keystone_user_role['admin@openstack'],
+      Class['nova::keystone::auth'],
+    ],
   }
-  Keystone_user_role['admin@openstack'] -> Exec['manage_m1.micro_nova_flavor']
 
   neutron_network { 'public':
     tenant_name     => 'openstack',
     router_external => true,
+    require         => [
+      Keystone_user_role['admin@openstack'],
+      Class['neutron::keystone::auth'],
+    ],
   }
-  Keystone_user_role['admin@openstack'] -> Neutron_network<||>
 
   neutron_subnet { 'public-subnet':
     cidr             => '172.24.5.0/24',
@@ -73,6 +82,10 @@ class openstack_integration::provision {
     # and 2/ if running in the gate, use /home/jenkins/cache/files/ cirros image.
     # source        => '/home/jenkins/cache/files/cirros-0.3.4-x86_64-disk.img',
     source           => 'http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img',
+    require          => [
+      Keystone_user_role['admin@openstack'],
+      Class['glance::keystone::auth'],
+    ],
   }
   glance_image { 'cirros_alt':
     ensure           => present,
@@ -83,6 +96,9 @@ class openstack_integration::provision {
     # and 2/ if running in the gate, use /home/jenkins/cache/files/ cirros image.
     # source        => '/home/jenkins/cache/files/cirros-0.3.4-x86_64-disk.img',
     source           => 'http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img',
+    require          => [
+      Keystone_user_role['admin@openstack'],
+      Class['glance::keystone::auth'],
+    ],
   }
-  Keystone_user_role['admin@openstack'] -> Glance_image<||>
 }

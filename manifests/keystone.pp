@@ -59,7 +59,6 @@ class openstack_integration::keystone (
     public_url     => $::openstack_integration::config::keystone_auth_uri,
     admin_url      => $::openstack_integration::config::keystone_admin_uri,
   }
-  class { '::keystone::disable_admin_token_auth': }
 
   class { '::openstack_extras::auth_file':
     password       => 'a_big_secret',
@@ -67,4 +66,7 @@ class openstack_integration::keystone (
     user_domain    => 'default',
     auth_url       => "${::openstack_integration::config::keystone_auth_uri}/v3/",
   }
+
+  include ::keystone::disable_admin_token_auth
+  Keystone::Resource::Service_identity<||> -> Class['::openstack_extras::auth_file'] -> Class['::keystone::disable_admin_token_auth']
 }

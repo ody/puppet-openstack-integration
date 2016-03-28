@@ -87,6 +87,6 @@ class openstack_integration::cinder (
   cinder_type { 'BACKEND_1':
     ensure     => present,
     properties => ['volume_backend_name=BACKEND_1'],
+    require    => Class['::cinder::keystone::auth'],
   }
-
 }
