@@ -24,4 +24,5 @@ rm -rf "${PUPPETFILE_DIR:?}/"*
 
 install_modules
 
+echo $(which puppet)
 puppet module list
