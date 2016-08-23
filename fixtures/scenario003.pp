@@ -37,7 +37,7 @@ if ($::operatingsystem == 'Ubuntu') and (versioncmp($::operatingsystemmajrelease
   $ssl_enabled     = false
   $trove_enabled   = false
 } else {
-  $ssl_enabled     = true
+  $ssl_enabled     = false
   # https://bugs.launchpad.net/trove/+bug/1597857
   $trove_enabled   = false
 }
@@ -66,6 +66,7 @@ include ::openstack_integration::horizon
 include ::openstack_integration::heat
 # enable when we figure why mistral tempest tests are so unstable
 # include ::openstack_integration::mistral
+include ::openstack_integration::murano
 include ::openstack_integration::sahara
 include ::openstack_integration::provision
 
@@ -75,4 +76,5 @@ class { '::openstack_integration::tempest':
   mistral => $mistral_enabled,
   horizon => true,
   heat    => true,
+  murano  => true,
 }

@@ -86,8 +86,10 @@ mod 'octavia',
   :ref => 'master'
 
 mod 'openstack_integration',
-  :git => 'https://git.openstack.org/openstack/puppet-openstack-integration',
-  :ref => 'master'
+#  :git => 'https://git.openstack.org/openstack/puppet-openstack-integration',
+#  :ref => 'master'
+  :git => 'https://github.com/ody/puppet-openstack-integration.git',
+  :ref => 'murano'
 
 mod 'openstack_extras',
   :git => 'https://git.openstack.org/openstack/puppet-openstack_extras',
@@ -184,7 +186,7 @@ mod 'postgresql',
 
 mod 'rabbitmq',
   :git => 'https://github.com/puppetlabs/puppetlabs-rabbitmq',
-  :ref => '5.4.0'
+  :ref => '1d8fc6e1abaac9e4f419ae0eee61acaf8f0a17cb'
 
 mod 'rsync',
   :git => 'https://github.com/puppetlabs/puppetlabs-rsync',

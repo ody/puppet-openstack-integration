@@ -36,6 +36,10 @@
 #   (optional) Define if Mistral needs to be tested.
 #   Default to false.
 #
+# [*murano*]
+#   (optional) Define if Murano needs to be tested.
+#   Default to false.
+#
 # [*neutron*]
 #   (optional) Define if Neutron needs to be tested.
 #   Default to true.
@@ -74,6 +78,7 @@ class openstack_integration::tempest (
   $horizon                 = false,
   $ironic                  = false,
   $mistral                 = false,
+  $murano                  = false,
   $neutron                 = true,
   $nova                    = true,
   $sahara                  = false,
@@ -132,6 +137,7 @@ class openstack_integration::tempest (
     zaqar_available         => $zaqar,
     mistral_available       => $mistral,
     gnocchi_available       => $gnocchi,
+    murano_available        => $murano,
     public_network_name     => 'public',
     dashboard_url           => $::openstack_integration::config::base_url,
     flavor_ref              => '42',
