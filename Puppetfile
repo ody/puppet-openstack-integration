@@ -17,8 +17,8 @@ mod 'ceph',
   :ref => 'stable/hammer'
 
 mod 'cinder',
-  :git => 'https://git.openstack.org/openstack/puppet-cinder',
-  :ref => 'stable/mitaka'
+  :git => 'https://github.com/ody/puppet-cinder.git',
+  :ref => 'mitaka/puppet4_backports'
 
 mod 'designate',
   :git => 'https://git.openstack.org/openstack/puppet-designate',
@@ -45,8 +45,8 @@ mod 'ironic',
   :ref => 'stable/mitaka'
 
 mod 'keystone',
-  :git => 'https://git.openstack.org/openstack/puppet-keystone',
-  :ref => 'stable/mitaka'
+  :git => 'https://github.com/ody/puppet-keystone.git',
+  :ref => 'mitaka/puppet4_backports'
 
 mod 'manila',
   :git => 'https://git.openstack.org/openstack/puppet-manila',
@@ -77,8 +77,8 @@ mod 'octavia',
   :ref => 'master'
 
 mod 'openstack_integration',
-  :git => 'https://git.openstack.org/openstack/puppet-openstack-integration',
-  :ref => 'stable/mitaka'
+  :git => 'https://github.com/ody/puppet-openstack-integration.git',
+  :ref => 'mitaka/puppet4_backports'
 
 mod 'openstack_extras',
   :git => 'https://git.openstack.org/openstack/puppet-openstack_extras',
@@ -97,8 +97,8 @@ mod 'sahara',
   :ref => 'stable/mitaka'
 
 mod 'swift',
-  :git => 'https://git.openstack.org/openstack/puppet-swift',
-  :ref => 'stable/mitaka'
+  :git => 'https://github.com/ody/puppet-swift.git',
+  :ref => 'mitaka/puppet4_backports'
 
 mod 'tempest',
   :git => 'https://git.openstack.org/openstack/puppet-tempest',
